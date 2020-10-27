@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Validation</title>
+	<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lobster">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
+	<style type="text/css">
+		body
+		{
+			height: 100%;
+			width: 100%;
+			margin: 0px;
+		}
+
+		.container
+		{
+			height: 575px;
+			width: 100%;
+			background-color: #DAE0E2;
+		}
+
+		.content
+		{
+			border: 2px solid #0A3D62;
+			border-radius: 6px;
+			width: 30%;
+			height: 490px;
+			position: relative;
+			left: 440px;
+			top: 50px;
+			background-color: #53E0BC;
+			font-family: 'Candara';
+		}
+
+		.signup
+		{
+			border: 2px solid lightgrey;
+			height: 432px; 
+		}
+
+		.signup label,input
+		{
+			position: relative;
+			left: 27%;
+			border-radius: 2px;
+			border: none;
+			padding: 0.7%;
+		}
+
+		.signup button
+		{
+			
+			position: relative;
+			left: 40%;
+			margin: 2%;
+			padding: 2%;
+		}
+
+		#signup-head
+		{
+			position: relative;
+			left: 41%;
+			font-size: 20px;
+			font-family: 'Lobster';
+
+		}
+
+		#error1, #error2, #error3, #error4, #error5
+		{
+			margin: 0px;
+			font-size: 12px;
+			color: red;
+			position: relative;
+			left: 27%;
+		}
+
+		#error6
+		{
+			margin: 0px;
+			font-size: 12px;
+			color: green;
+			position: relative;
+			left: 27%;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="content">
+		<form class="signup">
+			<br>
+			<label id="signup-head"><strong>SIGN UP</strong></label><br><br>
+			<label>First name</label><br> <p id="error1"></p> <input type="text" name="fname">
+			<br><br>
+			<label>Last name</label><br> <p id="error2"></p> <input type="text" name="lname">
+			<br><br>
+			<label>Email ID</label><br> <p id="error3"></p> <input type="text" name="email">
+			<br><br>
+			<label>Phone no.</label><br> <p id="error4"></p> <input type="text" name="phone">
+			<br><br>
+			<label>Set Password</label><br> <p id="error5"></p> <p id="error6"></p> <input type="text" name="pwd">
+			<br><br>
+			<button type="button" onclick="formValidation();">Submit</button>
+		</form>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+	// REGEX for names - ^[a-zA-Z]{1,}$
+	// REGEX for email - ^[a-z]{1}[a-zA-Z0-9]+[@]{1}[a-zA-Z0-9]{1,20}[.]{1}([a-z]{1,15}[.]{1})?([a-z]{1,5})$
+	// REGEX for phone no. - ^(\+91)?[6789][0-9]{9}$
+	// REGEX for password - ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9_#@%\*\-\&\$\!]{8,}$
+
+	function formValidation()
+	{
+		let fname = document.getElementsByName('fname')[0].value;
+		let lname = document.getElementsByName('lname')[0].value;
+		let email = document.getElementsByName('email')[0].value;
+		let phone = document.getElementsByName('phone')[0].value;
+		let pwd = document.getElementsByName('pwd')[0].value;
+		let fnameRegex = /^[a-zA-Z]{1,}$/;
+		let lnameRegex = /^[a-zA-Z]{1,}$/;
+		let emailRegex = /^[a-z]{1}[a-zA-Z0-9]+[@]{1}[a-zA-Z0-9]{1,20}[.]{1}([a-z]{1,15}[.]{1})?([a-z]{1,5})$/;
+		let phoneRegex = /^(\+91)?[6789][0-9]{9}$/;
+		let pwdRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[_#@%\*\-\&\$\!\^])[A-Za-z0-9_#@%\*\-\&\$\!\^]{8,}$/;
+		
+		var val = 0;
+
+		if(fnameRegex.exec(fname))
+		{
+			val++; 
+			console.log(val);
+		} 
+		else 
+		{
+			document.getElementById('error1').textContent = 'Invalid name!';
+		}
+
+		if(lnameRegex.exec(lname))
+		{
+			val++;	
+			console.log(val);
+		}
+		else
+		{
+			document.getElementById('error2').textContent = 'Invalid name!';
+		}
+
+		if(emailRegex.exec(email))
+		{
+			 val++;
+			 console.log(val);
+		}
+		else
+		{
+			document.getElementById('error3').textContent = 'Invalid email!'
+		}
+
+		if(phoneRegex.exec(phone))
+		{
+			val++;	
+			console.log(val);
+		}
+		else
+		{
+			document.getElementById('error4').textContent = 'Invalid number!';
+		}
+
+		if(pwdRegex.exec(pwd))
+		{
+			val++;
+			document.getElementById('error6').textContent = 'Strong password';
+			console.log(val);
+		}
+		else 
+		{
+			document.getElementById('error5').textContent = 'Weak password';
+		}
+
+		if(val === 5)
+		{
+			document.getElementsByName('fname')[0].value = '';
+			document.getElementsByName('lname')[0].value = '';
+			document.getElementsByName('email')[0].value = '';
+			document.getElementsByName('phone')[0].value = '' ;
+			document.getElementsByName('pwd')[0].value = '';
+			document.getElementById('error1').textContent = '';
+			document.getElementById('error2').textContent = '';
+			document.getElementById('error3').textContent = '';
+			document.getElementById('error4').textContent = '';
+			document.getElementById('error5').textContent = '';
+			document.getElementById('error6').textContent = '';
+			console.log('submitted');
+		}
+		else
+		{
+			console.log('failed');
+		}
+	}
+	
+</script>
+</html>
